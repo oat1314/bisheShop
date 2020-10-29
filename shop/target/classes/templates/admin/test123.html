@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>LikeU.Admin</title>
+
+    <link rel="icon" href="favicon.ico" />
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" type="text/css"th:href="@{/layuiadmin/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" type="text/css" th:href="@{/layuiadmin/style/admin.css}" media="all">
+    <script type="text/javascript" th:src="@{/layuiadmin/layui/layui.js}"></script>
+
+
+
+
+</head>
+<body>
+<div id="div1">
+
+</div>
+<textarea id="text1" style="width:100%; height:200px;"></textarea>
+</body>
+<!--富文本编辑器wangEditor-->
+<script type="text/javascript" th:src="@{/js/wangEditor.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+<script type="text/javascript">
+
+    var E = window.wangEditor
+    var editor = new E('#div1')
+    // 或者 var editor = new E( document.getElementById('editor') )
+    //自定义文件上传
+    editor.customConfig.customUploadImg = function(files, insert) {
+        var daw = new FormData();
+        for (var i = 0; i < files.length; i++) {
+            daw.append("files", files[i]);
+        }
+        //发送异步请求
+        $.ajax({
+            url : "/admin/uploadImage",
+            type : "POST",
+            data : daw,
+            async : false,
+            cache : false,
+            contentType : false,
+            processData : false,
+            success : function(da) {
+
+                if (da.errno == 0) {
+                    for (var j = 0; j < da.data.length; j++) {
+                        insert(da.data[j]);
+                    }
+                } else {
+                    alert(da.msg);
+                    return;
+                }
+            },
+        });
+    }
+    /*// 配置服务器端地址
+    editor.customConfig.uploadImgServer = '/admin/editor'*/
+/*    //配置指定文件名
+    editor.customConfig.uploadFileName = 'file'*/
+    // 调试模式打开
+    editor.customConfig.debug = true;
+    //如果图片不大，可以用base64存储
+    //editor.customConfig.uploadImgShowBase64 = true
+    editor.create()
+
+
+
+</script>
+</html>

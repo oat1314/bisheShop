@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0">
+
+    <title>个人中心</title>
+    <!--引入·外部文件-->
+    <div th:include="public/pagehead::head"></div>
+
+    <link th:href="@{/css/personal.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/colstyle.css}" rel="stylesheet" type="text/css">
+
+    <style>
+        .right{
+            position: absolute;
+            left: 90%;
+            color:red;
+        }
+    </style>
+
+</head>
+
+<body>
+<!--头 -->
+<header>
+    <article>
+        <div class="mt-logo">
+            <!--顶部导航条 -->
+            <div th:include="public/pagehead::common"></div>
+
+            <!--悬浮搜索框-->
+            <div th:include="public/pagehead::search"></div>
+
+            <div class="clear"></div>
+
+        </div>
+    </article>
+</header>
+<div class="nav-table">
+    <!--全部分类-->
+    <div th:include="public/pagehead::category"></div>
+</div>
+<b class="line"></b>
+<div class="center">
+    <div class="col-main">
+        <div class="main-wrap">
+            <!--<div class="wrap-left">-->
+            <div class="user-collection">
+                <!--标题 -->
+                <div class="am-cf am-padding">
+                    <div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">我的收藏</strong> / <small>My&nbsp;Collection</small></div>
+                </div>
+                <hr/>
+
+                <div class="you-like">
+                    <div class="s-bar">
+                        我的收藏
+                    </div>
+                    <div class="s-content">
+                        <div class="s-item-wrap" th:each="product: ${productList}">
+                            <div class="s-item">
+
+                                <div class="s-pic">
+                                    <a th:href="@{introduction?id=}+${product.getId()}" class="s-pic-link">
+                                        <img th:src="${product.getImage()}"   style="height:151px;"/>
+                                    </a>
+                                </div>
+                                <div class="s-info">
+                                    <div class="s-title"><a href="#" th:text="${product.getProdDesc()}">包邮s925纯银项链女吊坠短款锁骨链颈链日韩猫咪银饰简约夏配饰</a>
+                                        <span class="right" th:name="${product.getId()}">X</span></div>
+                                    <div class="s-price-box">
+                                        <<span class="s-price"><em class="s-price-sign">¥</em><em class="s-value" th:text="${product.getUnitPrice()}">42.50</em></span>
+                                        <span class="s-history-price"><em class="s-price-sign">¥</em><em class="s-value" th:text="${product.getUnitPrice()}">68.00</em></span>
+                                    </div>
+                                    <div class="s-extra-box">
+                                        <span class="s-comment">好评: 98.03%</span>
+                                        <span class="s-sales">月销: 219</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="s-more-btn i-load-more-item" data-screen="0"><i class="am-icon-refresh am-icon-fw"></i>更多</div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- introduce-->
+        <div th:include="public/pagehead::footer"></div>
+
+    </div>
+
+    <aside th:include="public/pagehead::person" class="menu">
+        <!--<ul>
+            <li class="person active">
+                <a href="#">个人中心</a>
+            </li>
+            <li class="person">
+                <a href="#">个人资料</a>
+                <ul>
+                    <li> <a href="information">个人信息</a></li>
+                    <li> <a href="safety">安全设置</a></li>
+                    <li> <a href="address">收货地址</a></li>
+                </ul>
+            </li>
+            <li class="person">
+                <a href="#">我的交易</a>
+                <ul>
+                    <li><a href="order">订单管理</a></li>
+                    <li> <a href="change">退款售后</a></li>
+                    <li > <a href="bill">账单明细</a></li>
+                </ul>
+            </li>
+
+        </ul>-->
+
+    </aside>
+    <!--<div th:include="public/pagehead::common"></div>-->
+</div>
+
+
+
+
+<div class="navCir">
+    <li ><a th:href="@{http://localhost:8765/front/index}"><i class="am-icon-home "></i>首页</a></li>
+    <li ><a th:href="@{http://localhost:8765/front/sort}"><i class="am-icon-list"></i>分类</a></li>
+    <li><a th:href="@{http://localhost:8765/front/shopcartlist}"><i class="am-icon-shopping-basket"></i>购物车</a></li>
+    <li class="active"><a th:href="@{http://localhost:8765/front/person}"><i class="am-icon-user"></i>我的</a></li>
+</div>
+
+<script th:src="@{/layuiadmin/layui/layui.all.js}">  </script>
+<script>
+    ;!function() {
+        //无需再执行layui.use()方法加载模块，直接使用即可
+        var form = layui.form
+            , layer = layui.layer;
+        var $ = layui.$
+            , admin = layui.admin
+            , element = layui.element
+            , layer = layui.layer
+            , laydate = layui.laydate
+            , form = layui.form;
+        form.render();
+        laydate.render();
+
+        $('.right').on('click', function () {
+            var id = $(this).attr('name')
+            layer.confirm('确定删除',function () {
+                $.ajax({
+                    type:'post',
+                    url:'delCollect',
+                    data:{id:id},
+                    dataType:'json',
+                    //contentType:'application/json',
+                    success:function (res) {
+                        if (res.code==1){
+                            layer.msg(res.msg,{
+                                icon:6
+                            },function () {
+                                window.location.reload()
+                            })
+                        }else{
+                            layer.msg(res.msg,{
+                                icon:5
+                            })
+                        }
+
+                    }
+                })
+
+            })
+        })
+    }();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+{
+  "groups": [
+    {
+      "name": "material",
+      "type": "com.ogx.shop.config.MaterialConfig",
+      "sourceType": "com.ogx.shop.config.MaterialConfig"
+    },
+    {
+      "name": "system",
+      "type": "com.ogx.shop.entity.AppConfig",
+      "sourceType": "com.ogx.shop.entity.AppConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "material.upload-dir",
+      "type": "java.lang.String",
+      "sourceType": "com.ogx.shop.config.MaterialConfig"
+    },
+    {
+      "name": "system.filepath",
+      "type": "java.lang.String",
+      "sourceType": "com.ogx.shop.entity.AppConfig"
+    },
+    {
+      "name": "system.urlpath",
+      "type": "java.lang.String",
+      "sourceType": "com.ogx.shop.entity.AppConfig"
+    }
+  ],
+  "hints": []
+}

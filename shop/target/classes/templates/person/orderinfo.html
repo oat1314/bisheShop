@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+	<head xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0">
+
+		<title>订单详情</title>
+
+		<!--引入·外部文件-->
+		<div th:include="public/pagehead::head"></div>
+
+		<link th:href="@{/css/orstyle.css}" rel="stylesheet" type="text/css">
+	</head>
+
+	<body>
+	<!--头 -->
+	<header>
+		<article>
+			<div class="mt-logo">
+				<!--顶部导航条 -->
+				<div th:include="public/pagehead::common"></div>
+
+				<!--悬浮搜索框-->
+				<div th:include="public/pagehead::search"></div>
+
+				<div class="clear"></div>
+
+			</div>
+		</article>
+	</header>
+            <div class="nav-table">
+				<!--全部分类-->
+				<div th:include="public/pagehead::category"></div>
+			</div>
+			<b class="line"></b>
+		<div class="center">
+			<div class="col-main">
+				<div class="main-wrap">
+
+					<div class="user-orderinfo">
+
+						<!--标题 -->
+						<div class="am-cf am-padding">
+							<div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">订单详情</strong> / <small>Order&nbsp;details</small></div>
+						</div>
+						<hr/>
+						<!--进度条-->
+						<div class="m-progress">
+							<div class="m-progress-list">
+								<span class="step-1 step">
+                                   <em class="u-progress-stage-bg"></em>
+                                   <i class="u-stage-icon-inner">1<em class="bg"></em></i>
+                                   <p class="stage-name">拍下商品</p>
+                                </span>
+								<span class="step-2 step">
+                                   <em class="u-progress-stage-bg"></em>
+                                   <i class="u-stage-icon-inner">2<em class="bg"></em></i>
+                                   <p class="stage-name">卖家发货</p>
+                                </span>
+								<span class="step-2 step">
+                                   <em class="u-progress-stage-bg"></em>
+                                   <i class="u-stage-icon-inner">3<em class="bg"></em></i>
+                                   <p class="stage-name">确认收货</p>
+                                </span>
+								<span class="step-2 step">
+                                   <em class="u-progress-stage-bg"></em>
+                                   <i class="u-stage-icon-inner">4<em class="bg"></em></i>
+                                   <p class="stage-name">交易完成</p>
+                                </span>
+								<span class="u-progress-placeholder"></span>
+							</div>
+							<div class="u-progress-bar total-steps-2">
+								<div class="u-progress-bar-inner"></div>
+							</div>
+						</div>
+						<div class="order-infoaside">
+							<div class="order-logistics">
+								<a href="logistics.html">
+									<div class="icon-log">
+										<i><img src="../images/receive.png"></i>
+									</div>
+									<div class="latest-logistics">
+										<p class="text">已签收,签收人是青年城签收，感谢使用天天快递，期待再次为您服务</p>
+										<div class="time-list">
+											<span class="date">2015-12-19</span><span class="week">周六</span><span class="time">15:35:42</span>
+										</div>
+										<div class="inquire">
+											<span class="package-detail">物流：天天快递</span>
+											<span class="package-detail">快递单号: </span>
+											<span class="package-number" >373269427868</span>
+											<a href="logistics.html">查看</a>
+										</div>
+									</div>
+									<span class="am-icon-angle-right icon"></span>
+								</a>
+								<div class="clear"></div>
+							</div>
+							<div class="order-addresslist">
+								<div class="order-address" th:each="address: ${addressList1}">
+									<div class="icon-add">
+									</div>
+									<p class="new-tit new-p-re">
+										<span class="new-txt" th:text="${address.getConsignee()}">小叮当</span>
+										<span class="new-txt-rd2" th:text="${address.getPhone()}">159****1622</span>
+									</p>
+									<div class="new-mu_l2a new-p-re">
+										<p class="new-mu_l2cw">
+											<span class="title">地址：</span>
+											<span class="province" th:text="${address.getProvince()}">湖北</span>省
+											<span class="city" th:text="${address.getCity()}">武汉</span>市
+											<span class="dist" th:text="${address.getDistrict()}">武昌</span>
+											<span class="street" th:text="${address.getAddress()}">东湖路75号众环大厦2栋9层902</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="order-infomain">
+
+							<div class="order-top">
+								<div class="th th-item">
+									<td class="td-inner">商品</td>
+								</div>
+								<div class="th th-price">
+									<td class="td-inner">单价</td>
+								</div>
+								<div class="th th-number">
+									<td class="td-inner">数量</td>
+								</div>
+								<div class="th th-operation">
+									<td class="td-inner">商品操作</td>
+								</div>
+								<div class="th th-amount">
+									<td class="td-inner">合计</td>
+								</div>
+								<div class="th th-status">
+									<td class="td-inner">交易状态</td>
+								</div>
+								<div class="th th-change">
+									<td class="td-inner">交易操作</td>
+								</div>
+							</div>
+
+							<div class="order-main">
+
+								<div class="order-list">
+
+									<div class="order-status1" th:each="sales: ${salesList3}">
+										<div class="order-title">
+											<div class="dd-num">订单编号：<a href="javascript:;"
+																		th:text="${sales.getInvoiceNo()}">1601430</a>
+											</div>
+											<span>下单时间：</span> <span
+												th:text="${sales.getExtend2()}"> 2015-12-20</span>
+											<!--    <em>店铺：小桔灯</em>-->
+										</div>
+										<div class="order-content">
+											<div class="order-left" th:each="salesItem1: ${saleItemList5}" style="display: none">
+												<div th:each="salesItem: ${salesItem1}">
+													<ul class="item-list" th:if="${salesItem.getInvoiceNo()}==${sales.getInvoiceNo()}" >
+														<li class="td td-item">
+															<div class="item-pic">
+																<a href="#" class="J_MakePoint">
+																	<img th:src="${salesItem.getExtend2()}"
+																		 class="itempic J_ItemImg">
+																</a>
+															</div>
+															<div class="item-info">
+																<div class="item-basic-info">
+																	<a href="#">
+																		<br/>
+																		<p th:text="${salesItem.getExtend3()}">美康粉黛醉美唇膏 持久保湿滋润防水不掉色</p>
+
+																	</a>
+																</div>
+															</div>
+														</li>
+														<li class="td td-price">
+															<div class="item-price">
+																<br/>
+																<span th:text="${salesItem.getDisPrice()}">333.00</span>
+															</div>
+														</li>
+														<li class="td td-number">
+															<div class="item-number">
+																<br/>
+																<span>×</span><span
+																	th:text="${salesItem.getQty()}">2</span>
+															</div>
+														</li>
+														<li class="td td-operation">
+															<div class="item-operation">
+																<a  th:href="@{refund?orderid=}+${salesItem.getInvoiceNo()}">退款/退货</a>
+															</div>
+														</li>
+													</ul>
+													<ul class="item-list" th:if="${salesItem.getInvoiceNo()}!=${sales.getInvoiceNo()}"  style="display: none">
+														<li class="td td-item">
+															<div class="item-pic">
+																<a href="#" class="J_MakePoint">
+																	<img src="../images/kouhong.jpg_80x80.jpg"
+																		 class="itempic J_ItemImg">
+																</a>
+															</div>
+															<div class="item-info">
+																<div class="item-basic-info">
+																	<a href="#">
+																		<br/>
+																		<p>美康粉黛醉美唇膏 持久保湿滋润防水不掉色</p>
+
+																	</a>
+																</div>
+															</div>
+														</li>
+														<li class="td td-price">
+															<div class="item-price">
+																<br/>
+																<span th:text="${salesItem.getUnitPrice()}">333.00</span>
+															</div>
+														</li>
+														<li class="td td-number">
+															<div class="item-number">
+																<br/>
+																<span>×</span><span
+																	th:text="${salesItem.getQty()}">2</span>
+															</div>
+														</li>
+														<li class="td td-operation">
+															<div class="item-operation">
+
+															</div>
+														</li>
+													</ul>
+												</div>
+											</div>
+											<div class="order-right">
+												<li class="td td-amount">
+													<div class="item-amount" th:text="${sales.getTotAmt()}">
+														合计：676.00
+													</div>
+												</li>
+												<div class="move-right">
+													<li class="td td-status">
+														<div class="item-status">
+															<p class="Mystatus">买家已付款</p>
+															<p class="order-info order-info1"><a th:href="@{orderinfo?invoiceNo=}+${sales.getInvoiceNo()}">订单详情</a></p>
+														</div>
+													</li>
+													<!--<li class="td td-change">
+                                                        <div class="am-btn am-btn-danger anniu submit" >
+                                                            确认收货</div>
+                                                    </li>-->
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<!--底部-->
+				<div th:include="public/pagehead::footer"></div>
+			</div>
+			<aside th:include="public/pagehead::person" class="menu">
+			<!--	<ul>
+					<li class="person active">
+						<a href="#">个人中心</a>
+					</li>
+					<li class="person">
+						<a href="#">个人资料</a>
+						<ul>
+							<li> <a href="information">个人信息</a></li>
+							<li> <a href="safety">安全设置</a></li>
+							<li> <a href="address">收货地址</a></li>
+						</ul>
+					</li>
+					<li class="person">
+						<a href="#">我的交易</a>
+						<ul>
+							<li><a href="order">订单管理</a></li>
+							<li> <a href="change">退款售后</a></li>
+							<li > <a href="bill">账单明细</a></li>
+						</ul>
+					</li>
+
+				</ul>-->
+
+			</aside>
+		</div>
+
+	<script th:src="@{/layuiadmin/layui/layui.all.js}">  </script>
+	<script>
+
+        ;!function(){
+            //无需再执行layui.use()方法加载模块，直接使用即可
+            var form = layui.form
+                , layer = layui.layer;
+            var $ = layui.$
+                , admin = layui.admin
+                , element = layui.element
+                , layer = layui.layer
+                , laydate = layui.laydate
+                , form = layui.form;
+            form.render();
+            laydate.render();
+
+            //必要的让页面正常显示
+            for(var k=0;k<=6;k++){
+                for (var i=0;i<$('.order-status'+k).length;i++){
+                    var tool = $($($('.order-status'+k)[i]).find('.order-left')[i])
+                    for (var j=0;j<$($('.order-status'+k)[i]).find('.order-left').length;j++){
+                        if(i==j){
+                            tool.css('display','block')
+                        }
+                    }
+                }
+            }
+
+
+        }();
+	</script>
+
+
+	</body>
+
+</html>

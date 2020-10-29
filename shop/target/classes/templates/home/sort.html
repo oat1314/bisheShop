@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">			
+		<title>全部分类</title>
+		<link th:href="@{/assets/css/amazeui.css}" rel="stylesheet" type="text/css" />
+		<link th:href="@{/basic/css/demo.css}" rel="stylesheet" type="text/css" />
+		<link th:href="@{/css/sortstyle.css}" rel="stylesheet" type="text/css" />
+		<script th:src="@{/assets/js/jquery.min.js}"></script>
+	</head>
+
+	<body>
+
+	<!--顶部导航条 -->
+	<div th:include="public/pagehead::common"></div>
+
+	<!--悬浮搜索框-->
+	<div th:include="public/pagehead::search"></div>
+				<div class="clear"></div>
+			</div>		
+		
+		
+		
+		<!--主体-->
+		
+		<div id="nav" class="navfull">
+			<div class="area clearfix">
+				<div class="category-content" id="guide_2">
+					<div class="long-title"><span class="all-goods">全部分类</span><span id="meauBack"><a href="home.html">返回</a></span></div>
+					<div class="category">
+										<ul class="category-list" id="js_climit_li">
+											<li class="appliance js_toggle relative "  th:each="kind,status: ${map}">
+												<div class="category-info">
+													<h3 class="category-name b-category-name">
+														<i><img th:src="@{/images/cake.png}"></i>
+														<a class="ml-22" title="点心"th:text="${kind.key.getKindName()}">点心/蛋糕</a>
+													</h3>
+													<em>&gt;</em></div>
+												<div class="menu-item menu-in top">
+													<div class="area-in">
+														<div class="area-bg">
+															<div class="menu-srot">
+																<div class="sort-side" th:if="${session.customer}!=null">
+																	<dl class="dl-sort">
+																		<dd th:each="product1: ${kind.value}"><a  th:href="@{select1?txt=}+${product1.getName()}">
+																			<!--<a  th:href="@{search?txt=}+${product1.getName()}">-->
+																			<span th:text="${product1.getName()}">脱水蛋糕</span></a>
+																		</dd>
+																	</dl>
+																</div>
+																<div class="sort-side" th:if="${session.customer}==null">
+																	<dl class="dl-sort">
+																		<dd th:each="product1: ${kind.value}"><a  th:href="login">
+																			<span th:text="${product1.getName()}">脱水蛋糕</span></a>
+																		</dd>
+																	</dl>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<b class="arrow"></b>
+											</li>
+
+										</ul>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function() {
+		$("li").click(function() {		
+		     	$(this).addClass("selected").siblings().removeClass("selected");
+	       })
+		})
+		</script>
+		<div class="clear"></div>
+		<!--引导 -->
+		<div class="navCir">
+			<li ><a th:href="@{http://localhost:8765/front/index}"><i class="am-icon-home "></i>首页</a></li>
+			<li class="active"><a th:href="@{http://localhost:8765/front/sort}"><i class="am-icon-list"></i>分类</a></li>
+			<li><a th:href="@{http://localhost:8765/front/shopcartlist}"><i class="am-icon-shopping-basket"></i>购物车</a></li>
+			<li><a th:href="@{http://localhost:8765/front/person}"><i class="am-icon-user"></i>我的</a></li>
+		</div>
+
+
+
+	<script>
+        $("#ai-topsearch").on('click', function () {
+            console.log("我被点击了")
+            var name = $("#searchInput").val();
+            location.href = 'search?' + 'txt=' + encodeURI(name);//将值发送到search页面
+        })
+	</script>
+	</body>
+
+
+
+</html>

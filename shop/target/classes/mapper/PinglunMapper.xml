@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ogx.shop.dao.PinglunMapper">
+  <resultMap id="BaseResultMap" type="com.ogx.shop.entity.Pinglun">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="pinglun" jdbcType="VARCHAR" property="pinglun" />
+    <result column="pro_id" jdbcType="INTEGER" property="proId" />
+    <result column="cust_id" jdbcType="INTEGER" property="custId"/>
+    <result column="extend1" jdbcType="VARCHAR" property="extend1" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,pinglun,pro_id,cust_id,extend1
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pinglun
+    where pro_id = #{proId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pinglun
+    where pro_id = #{proId,jdbcType=INTEGER}
+  </delete>
+
+
+
+  <insert id="insert" parameterType="com.ogx.shop.entity.Pinglun">
+    insert into pinglun (id,pinglun,pro_id,cust_id,extend1)
+    values (#{id,jdbcType=INTEGER}, #{pinglun,jdbcType=VARCHAR}, #{proId,jdbcType=INTEGER},
+      #{custId,jdbcType=VARCHAR}, #{extend1,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ogx.shop.entity.Pinglun">
+    insert into role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="pinglun != null">
+        pinglun,
+      </if>
+      <if test="proId != null">
+        pro_id,
+      </if>
+      <if test="custId != null">
+        cust_id,
+      </if>
+      <if test="extend1 != null">
+        extend1,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pinglun != null">
+        #{pinglun,jdbcType=VARCHAR},
+      </if>
+      <if test="proId != null">
+        #{proId,jdbcType=INTEGER},
+      </if>
+      <if test="custId != null">
+        #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="extend1 != null">
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ogx.shop.entity.Pinglun">
+    update role
+    <set>
+      <if test="pinglun != null">
+        pinglun = #{pinglun,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        pro_id = #{proId,jdbcType=INTEGER},
+      </if>
+      <if test="extend2 != null">
+        cust_id = #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="extend1 != null">
+        extend1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pro_id = #{proId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ogx.shop.entity.Pinglun">
+    update pinglun
+    set pinglun = #{roleName,jdbcType=VARCHAR},
+      pro_id = #{proId,jdbcType=INTEGER},
+      cust_id = #{custId,jdbcType=INTEGER},
+      extend1 = #{extend1,jdbcType=VARCHAR}
+    where pro_id = #{proId,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="selectAllById" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pinglun
+    where pro_id = #{proId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pinglun
+
+  </select>
+
+
+
+</mapper>
